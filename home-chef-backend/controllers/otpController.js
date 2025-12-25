@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 let otpStore = {}; // temporary in-memory OTP storage (you can later move this to Redis or DB)
 
-// ✅ Send OTP
+// Send OTP
 export const sendOTP = async (req, res) => {
   try {
     const { email } = req.body;
@@ -24,7 +24,7 @@ export const sendOTP = async (req, res) => {
 
     // nodemailer setup (using Gmail example)
  const transporter = nodemailer.createTransport({
-  service: "gmail", // ✅ simpler than specifying host/port manually
+  service: "gmail", // simpler than specifying host/port manually
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS, // your 16-digit App Password
@@ -47,7 +47,7 @@ export const sendOTP = async (req, res) => {
   }
 };
 
-// ✅ Verify OTP and Create Account
+// Verify OTP and Create Account
 export const verifyOTP = async (req, res) => {
   try {
     const { name, email, password, role, otp } = req.body;

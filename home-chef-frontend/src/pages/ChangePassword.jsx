@@ -23,7 +23,7 @@ export default function ChangePassword() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("✅ Password changed successfully!");
+      alert(" Password changed successfully!");
       navigate("/customer-dashboard");
     } catch (err) {
       console.error("Error changing password:", err.response?.data || err.message);

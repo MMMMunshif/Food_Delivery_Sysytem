@@ -4,7 +4,7 @@ import Post from "../models/Post.js";
 export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const author = req.user ? req.user.name : req.body.author; // ✅ fallback if not in token
+    const author = req.user ? req.user.name : req.body.author; //  fallback if not in token
 
     const newPost = new Post({
       title,

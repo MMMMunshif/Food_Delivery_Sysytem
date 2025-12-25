@@ -2,14 +2,14 @@ import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-// 🔑 Generate JWT
+//  Generate JWT
 const generateToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 };
 
-// 📝 Register
+//  Register
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// 🔐 Login
+//  Login
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -54,7 +54,7 @@ export const loginUser = async (req, res) => {
     if (!isMatch) return res.status(401).json({ message: "Invalid password" });
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },  // 👈 include role in token
+      { id: user._id, role: user.role },  //  include role in token
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -64,7 +64,7 @@ export const loginUser = async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
-        role: user.role,   // 👈 send role back
+        role: user.role,   //  send role back
       },
     });
   } catch (err) {
@@ -97,7 +97,7 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-// ✅ Delete account
+//  Delete account
 export const deleteProfile = async (req, res) => {
   try {
     await req.user.deleteOne();
@@ -109,7 +109,7 @@ export const deleteProfile = async (req, res) => {
 
 
 
-// 🔑 Change password
+//  Change password
 export const changePassword = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -117,11 +117,11 @@ export const changePassword = async (req, res) => {
 
     const { oldPassword, newPassword } = req.body;
 
-    // ✅ Check old password
+    // Check old password
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) return res.status(400).json({ message: "Old password is incorrect" });
 
-    // ✅ Hash and update new password
+    //  Hash and update new password
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
 
